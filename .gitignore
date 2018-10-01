@@ -137,3 +137,4 @@ venv.bak/
 .idea/
 .vscode/
 .envrc
+*.db
