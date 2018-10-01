@@ -12,6 +12,7 @@ flask-migrate = "*"
 
 [dev-packages]
 ipython = "*"
+flask-shell-ipython = "*"
 
 [requires]
 python_version = "3.7"
