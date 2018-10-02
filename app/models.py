@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 
 
@@ -14,6 +15,17 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+    @property
+    def password(self):
+        raise AttributeError('Password is not a readable attribute!')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 
 class Post(db.Model):
