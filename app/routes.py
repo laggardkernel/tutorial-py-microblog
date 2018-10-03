@@ -92,17 +92,13 @@ def user(username):
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
-    form = EditProfileForm()
+    form = EditProfileForm(current_user.username)
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if current_user._get_current_object() == user:
-            current_user.username = form.username.data
-            current_user.about_me = form.about_me.data
-            db.session.commit()
-            flash('Your changes have been saved.')
-            return redirect(url_for('edit_profile'))
-        else:
-            form.username.errors.append('Please use a different username.')
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
