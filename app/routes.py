@@ -5,8 +5,10 @@ from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm
 from app.models import User
+
+from wtforms.validators import ValidationError
 
 
 @app.before_request
@@ -73,6 +75,7 @@ def register():
         db.session.commit()
         flash("Congratulations, you're now a registered user!")
         return redirect(url_for('login'))
+    # else: validation err or GET request
     return render_template('register.html', title='Register', form=form)
 
 
@@ -85,3 +88,23 @@ def user(username):
         {'author': user, 'body': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if current_user._get_current_object() == user:
+            current_user.username = form.username.data
+            current_user.about_me = form.about_me.data
+            db.session.commit()
+            flash('Your changes have been saved.')
+            return redirect(url_for('edit_profile'))
+        else:
+            form.username.errors.append('Please use a different username.')
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    # else, POST with validation err
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
