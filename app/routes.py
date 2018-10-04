@@ -8,8 +8,6 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
 from app.models import User
 
-from wtforms.validators import ValidationError
-
 
 @app.before_request
 def before_request():
@@ -104,3 +102,37 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     # else, POST with validation err
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+
+@app.route('/follow/<username>')
+@login_required
+def follow(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User {} not found.'.format(username))
+        return redirect(url_for('index'))
+    elif user == current_user:
+        flash('You cannot follow yourself!')
+        return redirect(url_for('user', username=username))
+    else:
+        current_user.follow(user)
+        db.session.commit()
+        flash('You are following {}!'.format(username))
+        return redirect(url_for('user', username=username))
+
+
+@app.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User {} not found.'.format(username))
+        return redirect(url_for('index'))
+    elif user == current_user:
+        flash('You cannot unfollow yourself!')
+        return redirect(url_for('user', username=username))
+    else:
+        current_user.unfollow(user)
+        db.session.commit()
+        flash('You are not following {}!'.format(username))
+        return redirect(url_for('user', username=username))
