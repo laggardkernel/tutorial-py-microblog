@@ -1,7 +1,9 @@
 alembic==1.0.6
+babel==2.6.0
 blinker==1.4
 click==7.0
 dominate==2.3.5
+flask-babel==0.12.2
 flask-bootstrap==3.3.7.1
 flask-login==0.4.1
 flask-mail==0.9.1
@@ -18,6 +20,7 @@ pyjwt==1.7.1
 python-dateutil==2.7.5
 python-dotenv==0.10.1
 python-editor==1.0.3
+pytz==2018.9
 six==1.12.0
 sqlalchemy==1.2.16
 visitor==0.1.3
