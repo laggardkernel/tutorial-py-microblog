@@ -12,6 +12,7 @@ flask-moment==0.6.0
 flask-sqlalchemy==2.3.2
 flask-wtf==0.14.2
 flask==1.0.2
+guess-language-spirit==0.5.3
 itsdangerous==1.1.0
 jinja2==2.10
 mako==1.0.7

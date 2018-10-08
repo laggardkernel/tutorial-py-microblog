@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "20e8e95fb3ea8db8fbdf50993d998dad168d06a6da4291955e3b405d49e3e6f1"
+            "sha256": "010111aac5f01a772f87ea622f16facb8ad8284010ac9d8b879787aeead9eabb"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -116,6 +116,13 @@
             ],
             "index": "pypi",
             "version": "==0.14.2"
+        },
+        "guess-language-spirit": {
+            "hashes": [
+                "sha256:a9b20470246bbfd1b69b055ff6459e05aa8cb5f1f1d8481350819cd7680792cc"
+            ],
+            "index": "pypi",
+            "version": "==0.5.3"
         },
         "itsdangerous": {
             "hashes": [
@@ -357,10 +364,10 @@
         },
         "parso": {
             "hashes": [
-                "sha256:35704a43a3c113cce4de228ddb39aab374b8004f4f2407d070b6a2ca784ce8a2",
-                "sha256:895c63e93b94ac1e1690f5fdd40b65f07c8171e3e53cbd7793b5b96c0e0a7f24"
+                "sha256:4b8f9ed80c3a4a3191aa3261505d868aa552dd25649cb13a7d73b6b7315edf2d",
+                "sha256:5a120be2e8863993b597f1c0437efca799e90e0793c98ae5d4e34ebd00140e31"
             ],
-            "version": "==0.3.1"
+            "version": "==0.3.2"
         },
         "pexpect": {
             "hashes": [
