@@ -6,6 +6,7 @@ from time import time
 import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from guess_language import guess_language
 from app import app, db, login
 
 followers = db.Table('followers',
@@ -109,3 +110,18 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+    @staticmethod
+    def add_post_language():
+        """
+        Update languages of all post in db
+        :return: None
+        """
+        for post in Post.query.all():
+            if not post.language:
+                language = guess_language(post.body)
+                if language == 'UNKNOWN' or len(language) > 5:
+                    language = ''
+                post.language = language
+                db.session.add(post)
+                db.session.commit()
