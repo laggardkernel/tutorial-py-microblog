@@ -14,7 +14,11 @@
       {{ _('%(username)s said %(when)s',
           username=user_link,when=moment(post.timestamp).fromNow()) }}
       <br>
-      {{ post.body }}
+      <span id="post{{ post.id }}">{{ post.body }}</span>
+      <br><br>
+      <span id="translation{{ post.id }}">
+        <a href="#">{{ _('Translate') }}</a>
+      </span>
     </td>
   </tr>
 </table>

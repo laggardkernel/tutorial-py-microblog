@@ -23,5 +23,5 @@ class Config(object):
     ADMINS = os.environ.get('ADMIN') or ['you-email@example.com']
 
     POSTS_PER_PAGE = 25
-
     LANGUAGES = ['en', 'zh_CN']
+    MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
