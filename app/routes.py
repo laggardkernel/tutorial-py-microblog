@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from datetime import datetime
+from flask import g
 from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
-from flask_babel import _
+from flask_babel import _, get_locale
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, \
@@ -17,6 +18,8 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+        # store locale str in g fro moment.js
+        g.locale = str(get_locale()).replace('_Hans', '')
 
 
 @app.route('/', methods=['GET', 'POST'])
