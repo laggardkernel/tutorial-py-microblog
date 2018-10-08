@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-10-08 09:20+0800\n"
+"POT-Creation-Date: 2019-10-09 15:27+0800\n"
 "PO-Revision-Date: 2018-10-08 09:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -86,52 +86,60 @@ msgstr "重置密码"
 msgid "Request Password Reset"
 msgstr "请求重置密码"
 
-#: app/routes.py:34
+#: app/routes.py:38
 msgid "Your post is now live!"
 msgstr "您的文章已经发布！"
 
-#: app/routes.py:69
+#: app/routes.py:73
 msgid "Invalid username or password"
 msgstr "无效的用户名或密码"
 
-#: app/routes.py:98
+#: app/routes.py:102
 msgid "Congratulations, you're now a registered user!"
 msgstr "恭喜，您已成为注册用户！"
 
-#: app/routes.py:127
+#: app/routes.py:131
 msgid "Your changes have been saved."
 msgstr "您的修改已经更新。"
 
-#: app/routes.py:141 app/routes.py:158
+#: app/routes.py:145 app/routes.py:162
 #, python-format
 msgid "User %(username)s not found."
 msgstr "不可用用户名 %(username)s。"
 
-#: app/routes.py:144
+#: app/routes.py:148
 msgid "You cannot follow yourself!"
 msgstr "无效操作，无法关注自己！"
 
-#: app/routes.py:149
+#: app/routes.py:153
 #, python-format
 msgid "You are following %(username)s!"
 msgstr "您开始关注 %(username)s！"
 
-#: app/routes.py:161
+#: app/routes.py:165
 msgid "You cannot unfollow yourself!"
 msgstr "无效操作，无法关注自己！"
 
-#: app/routes.py:166
+#: app/routes.py:170
 #, python-format
 msgid "You are not following %(username)s!"
 msgstr "您不再关注 %(username)s！"
 
-#: app/routes.py:180
+#: app/routes.py:184
 msgid "Check your email for the instructions to reset your password"
 msgstr "请检查邮件，据其中指示重置密码。"
 
-#: app/routes.py:196
+#: app/routes.py:200
 msgid "Your password has been reset."
 msgstr "您的密码已被重置。"
+
+#: app/translate.py:12
+msgid "Error: the translation service is not configured."
+msgstr "错误：翻译服务没有配置开启。"
+
+#: app/translate.py:18
+msgid "Error: the translation service failed."
+msgstr "错误：翻译服务暂时不可使用。"
 
 #: app/templates/404.html:4
 msgid "File Note Found"
@@ -149,6 +157,10 @@ msgstr "已经将此报告给管理员。对此带来的不变我们深感歉意
 #, python-format
 msgid "%(username)s said %(when)s"
 msgstr "%(username)s 在 %(when)s 发布："
+
+#: app/templates/_post.html:24
+msgid "Translate"
+msgstr "翻译"
 
 #: app/templates/base.html:7
 msgid "Welcome to Microblog"
@@ -173,6 +185,10 @@ msgstr "个人信息"
 #: app/templates/base.html:34
 msgid "Logout"
 msgstr "登出"
+
+#: app/templates/base.html:70
+msgid "Error: Could not contact server."
+msgstr "错误：无法连接到服务器。"
 
 #: app/templates/edit_profile.html:5
 msgid "Edit Profile"
