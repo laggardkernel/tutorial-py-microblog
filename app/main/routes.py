@@ -12,13 +12,13 @@ from app.translate import translate
 from . import bp
 
 
-@bp.before_request
+@bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
-        # store locale str in g fro moment.js
-        g.locale = str(get_locale()).replace('_Hans', '')
+    # store locale str in g fro moment.js
+    g.locale = str(get_locale()).replace('_Hans', '')
 
 
 @bp.route('/', methods=['GET', 'POST'])
