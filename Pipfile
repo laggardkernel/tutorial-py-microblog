@@ -17,6 +17,7 @@ flask-moment = "*"
 flask-babel = "*"
 guess-language-spirit = "*"
 requests = "*"
+elasticsearch = "*"
 
 [dev-packages]
 ipython = "*"

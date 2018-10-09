@@ -1,7 +1,7 @@
 appnope==0.1.0 ; sys_platform == 'darwin'
 backcall==0.1.0
 click==7.0
-decorator==4.3.0
+decorator==4.3.2
 flask-shell-ipython==0.4.0
 flask==1.0.2
 ipython-genutils==0.2.0
