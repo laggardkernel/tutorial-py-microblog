@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
+from dotenv import load_dotenv
 
 basedir = os.path.dirname(os.path.abspath(__file__))
+# load_dotenv(os.path.join(basedir, '.env')) # built in Flask now
 
 
 class Config(object):

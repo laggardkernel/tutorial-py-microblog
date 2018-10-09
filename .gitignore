@@ -385,3 +385,6 @@ dmypy.json
 ### Custom ###
 .envrc
 *.db
+
+# rotating logs
+*.log.?
