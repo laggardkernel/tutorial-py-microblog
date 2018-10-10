@@ -30,3 +30,6 @@ class Config(object):
 
     # Full-text search
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+
+    # log to stdout for heroku
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
