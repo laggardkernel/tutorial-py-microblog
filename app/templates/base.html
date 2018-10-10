@@ -43,9 +43,10 @@
               <a href="{{ url_for('main.messages') }}">
                 {{ _('Messages') }}
                 {% set new_messags = current_user.new_messages() %}
-                {% if new_messags %}
-                  <span class="badge">{{ new_messags }}</span>
-                {% endif %}
+                <span id="message_count" class="badge"
+                      style="visibility: {% if new_messages %}visible{% else %}hidden{% endif %};">
+                          {{ new_messags }}
+                </span>
               </a>
             </li>
             <li><a href="{{ url_for('main.user', username=current_user.username) }}">{{ _('Profile') }}</a></li>
@@ -129,5 +130,26 @@
         }
       )
     });
+
+    function set_message_count(n) {
+      // update count badge for new_messages
+      $('#message_count').text(n)
+        .css('visibility', n ? 'visible' : 'hidden');
+    }
+    {% if current_user.is_authenticated %}
+      $(function () {
+        var since = 0;
+        // fetch notifications every 10 secs
+        setInterval(function () {
+          $.ajax('{{ url_for('main.notifications') }}?since=' + since).done(function (notifications) {
+            for (var i = 0; i < notifications.length; i++) {
+              if (notifications[i].name == 'unread_message_count')
+                set_message_count(notifications[i].data);
+              since = notifications[i].timestamp;
+            }
+          });
+        }, 10000);
+      });
+    {% endif %}
   </script>
 {% endblock %}

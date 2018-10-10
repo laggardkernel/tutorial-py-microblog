@@ -7,7 +7,7 @@ from flask_babel import _, get_locale
 from guess_language import guess_language
 from app import db
 from .forms import EditProfileForm, PostForm, SearchForm, MessageForm
-from app.models import User, Post, Message
+from app.models import User, Post, Message, Notification
 from app.translate import translate
 from . import bp
 
@@ -165,6 +165,8 @@ def send_message(recipient):
     if form.validate_on_submit():
         msg = Message(author=current_user, recipient=user, body=form.message.data)
         db.session.add(msg)
+        # count unread message
+        user.add_notification('unread_message_count', user.new_messages())
         db.session.commit()
         flash(_('Your message has been sent.'))
         return redirect(url_for('.user', username=recipient))
@@ -177,6 +179,8 @@ def send_message(recipient):
 def messages():
     # update last_message_read_time first
     current_user.last_message_read_time = datetime.utcnow()
+    # reset Notification unread_message_count
+    current_user.add_notification('unread_message_count', 0)
     db.session.commit()
     page = request.args.get('page', 1, type=int)
     messages = current_user.messages_received.order_by(
@@ -186,3 +190,16 @@ def messages():
     prev_url = url_for('.messages', page=messages.prev_num) if messages.has_prev else None
     return render_template('main/messages.html', messages=messages.items,
                            next_url=next_url, prev_url=prev_url)
+
+
+@bp.route('/notifications')
+@login_required
+def notifications():
+    since = request.args.get('since', 0.0, type=float)
+    notifications = current_user.notifications.filter(
+        Notification.timestamp > since).order_by(Notification.timestamp.asc())
+    return jsonify([{
+        'name': n.name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications])
