@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-01-28 17:48+0800\n"
+"POT-Creation-Date: 2019-10-10 10:09+0800\n"
 "PO-Revision-Date: 2018-10-08 09:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -138,7 +138,7 @@ msgstr "已经将此报告给管理员。对此带来的不变我们深感歉意
 msgid "About me"
 msgstr "个人简介"
 
-#: app/main/forms.py:14 app/main/forms.py:31
+#: app/main/forms.py:14 app/main/forms.py:31 app/main/forms.py:49
 msgid "Submit"
 msgstr "提交"
 
@@ -149,6 +149,10 @@ msgstr "说点什么"
 #: app/main/forms.py:35 app/main/routes.py:149
 msgid "Search"
 msgstr "搜索"
+
+#: app/main/forms.py:46
+msgid "Message"
+msgstr "消息"
 
 #: app/main/routes.py:37
 msgid "Your post is now live!"
@@ -181,6 +185,14 @@ msgstr "无效操作，无法关注自己！"
 msgid "You are not following %(username)s!"
 msgstr "您不再关注 %(username)s！"
 
+#: app/main/routes.py:169
+msgid "Your message has been sent."
+msgstr "您的消息已经发送。"
+
+#: app/main/routes.py:171
+msgid "Send Message"
+msgstr "发送消息"
+
 #: app/main/templates/main/edit_profile.html:5
 msgid "Edit Profile"
 msgstr "编辑个人信息"
@@ -190,13 +202,25 @@ msgstr "编辑个人信息"
 msgid "Hi, %(username)s!"
 msgstr "您好，%(username)s！"
 
-#: app/main/templates/main/index.html:17 app/main/templates/main/user.html:37
+#: app/main/templates/main/index.html:17 app/main/templates/main/user.html:44
 msgid "Newer posts"
 msgstr "较新的文章"
 
-#: app/main/templates/main/index.html:22 app/main/templates/main/user.html:42
+#: app/main/templates/main/index.html:22 app/main/templates/main/user.html:49
 msgid "Older posts"
 msgstr "较旧的文章"
+
+#: app/main/templates/main/messages.html:4 app/templates/base.html:44
+msgid "Messages"
+msgstr "消息"
+
+#: app/main/templates/main/messages.html:12
+msgid "Newer messages"
+msgstr "新消息"
+
+#: app/main/templates/main/messages.html:17
+msgid "Older messages"
+msgstr "旧消息"
 
 #: app/main/templates/main/search.html:4
 msgid "Search Result"
@@ -209,6 +233,11 @@ msgstr "前一页结果"
 #: app/main/templates/main/search.html:18
 msgid "Next results"
 msgstr "下一页结果"
+
+#: app/main/templates/main/send_message.html:5
+#, python-format
+msgid "Send Message to %(recipient)s"
+msgstr "向 %(recipient)s 发送消息"
 
 #: app/main/templates/main/user.html:12
 msgid "User"
@@ -245,6 +274,10 @@ msgstr "关注"
 msgid "Unfollow"
 msgstr "取消关注"
 
+#: app/main/templates/main/user.html:28
+msgid "Send private message"
+msgstr "发送私信"
+
 #: app/templates/_post.html:16
 #, python-format
 msgid "%(username)s said %(when)s"
@@ -270,15 +303,15 @@ msgstr "最新"
 msgid "Login"
 msgstr "登录"
 
-#: app/templates/base.html:42
+#: app/templates/base.html:47
 msgid "Profile"
 msgstr "个人信息"
 
-#: app/templates/base.html:43
+#: app/templates/base.html:48
 msgid "Logout"
 msgstr "登出"
 
-#: app/templates/base.html:79
+#: app/templates/base.html:84
 msgid "Error: Could not contact server."
 msgstr "错误：无法连接到服务器。"
 
