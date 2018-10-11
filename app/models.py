@@ -12,6 +12,8 @@ from flask_login import UserMixin
 from guess_language import guess_language
 from app import db, login
 from app.search import add_to_index, remove_from_index, query_index
+import redis
+import rq
 
 
 class SearchableMixin(object):
@@ -100,6 +102,8 @@ class User(UserMixin, db.Model):
     last_message_read_time = db.Column(db.DateTime)
 
     notifications = db.relationship('Notification', backref='user', lazy='dynamic')
+
+    tasks = db.relationship('Task', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -228,3 +232,24 @@ class Notification(db.Model):
 
     def get_data(self):
         return json.loads(str(self.payload_json))
+
+
+class Task(db.Model):
+    # use redis generated string as task id
+    id = db.Column(db.String(36), primary_key=True)
+    name = db.Column(db.String(128), index=True)
+    description = db.Column(db.String(128))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    complete = db.Column(db.Boolean, default=False)
+
+    def get_rq_job(self):
+        try:
+            rq_job = rq.job.Job.fetch(self.id, connection=current_app.redis)
+        except (redis.exceptions.RedisError, rq.exceptions.NoSuchJobError):
+            return None
+        return rq_job
+
+    def get_progress(self):
+        job = self.get_rq_job()
+        # Mark unfound job's progress as 100
+        return job.meta.get('progress', 0) if job is not None else 100

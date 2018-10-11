@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from app import create_app, db, cli
-from app.models import User, Post, Message, Notification
+from app.models import User, Post, Message, Notification, Task
 
 app = create_app()
 cli.register(app)
@@ -14,4 +14,4 @@ def make_shell_context():
     :return: context dict
     """
     return {'db': db, 'User': User, 'Post': Post, 'Message': Message,
-            'Notification': Notification}
+            'Notification': Notification, 'Task': Task}

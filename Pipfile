@@ -18,6 +18,7 @@ flask-babel = "*"
 guess-language-spirit = "*"
 requests = "*"
 elasticsearch = "*"
+rq = "*"
 
 [dev-packages]
 ipython = "*"
