@@ -12,10 +12,16 @@ def send_async_email(app, msg):
         mail.send(msg)
 
 
-def send_mail(subject, sender, recipients, text_body, html_body):
+def send_mail(subject, sender, recipients, text_body, html_body, attachments=None, sync=False):
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
-    # get the real app object from proxy current_app
-    Thread(target=send_async_email,
-           args=(current_app._get_current_object(), msg)).start()
+    if attachments:
+        for attachment in attachments:
+            msg.attach(*attachment)
+    if sync:
+        mail.send(msg)
+    else:
+        # get the real app object from proxy current_app
+        Thread(target=send_async_email,
+               args=(current_app._get_current_object(), msg)).start()

@@ -19,10 +19,13 @@ class Config(object):
 
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = os.environ.get('MAIL_PORT')
+    MAIL_PORT = os.environ.get('MAIL_PORT')
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = os.environ.get('ADMIN') or ['you-email@example.com']
+    ADMINS = ['you-email@example.com']
+    if os.environ.get('ADMIN'):
+        ADMINS = [os.environ.get('ADMIN')] + ADMINS
 
     POSTS_PER_PAGE = 25
     LANGUAGES = ['en', 'zh_CN']
