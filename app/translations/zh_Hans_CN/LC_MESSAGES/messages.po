@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-10-10 10:09+0800\n"
+"POT-Creation-Date: 2018-10-11 10:34+0800\n"
 "PO-Revision-Date: 2018-10-08 09:20+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: app/__init__.py:21
+#: app/__init__.py:23
 msgid "Please log in to access this page."
 msgstr "请登录后再继续访问此页。"
 
@@ -185,13 +185,21 @@ msgstr "无效操作，无法关注自己！"
 msgid "You are not following %(username)s!"
 msgstr "您不再关注 %(username)s！"
 
-#: app/main/routes.py:169
+#: app/main/routes.py:171
 msgid "Your message has been sent."
 msgstr "您的消息已经发送。"
 
-#: app/main/routes.py:171
+#: app/main/routes.py:173
 msgid "Send Message"
 msgstr "发送消息"
+
+#: app/main/routes.py:212
+msgid "An export task is currently in progress"
+msgstr "已有一项输出任务正在进行中"
+
+#: app/main/routes.py:214
+msgid "Exporting posts..."
+msgstr "正在输出文章……"
 
 #: app/main/templates/main/edit_profile.html:5
 msgid "Edit Profile"
@@ -202,11 +210,11 @@ msgstr "编辑个人信息"
 msgid "Hi, %(username)s!"
 msgstr "您好，%(username)s！"
 
-#: app/main/templates/main/index.html:17 app/main/templates/main/user.html:44
+#: app/main/templates/main/index.html:17 app/main/templates/main/user.html:47
 msgid "Newer posts"
 msgstr "较新的文章"
 
-#: app/main/templates/main/index.html:22 app/main/templates/main/user.html:49
+#: app/main/templates/main/index.html:22 app/main/templates/main/user.html:52
 msgid "Older posts"
 msgstr "较旧的文章"
 
@@ -265,16 +273,20 @@ msgid "Edit your profile"
 msgstr "编辑个人信息"
 
 #: app/main/templates/main/user.html:21
+msgid "Export your posts"
+msgstr "输出你的文章"
+
+#: app/main/templates/main/user.html:24
 #: app/main/templates/main/user_popup.html:19
 msgid "Follow"
 msgstr "关注"
 
-#: app/main/templates/main/user.html:23
+#: app/main/templates/main/user.html:26
 #: app/main/templates/main/user_popup.html:21
 msgid "Unfollow"
 msgstr "取消关注"
 
-#: app/main/templates/main/user.html:28
+#: app/main/templates/main/user.html:31
 msgid "Send private message"
 msgstr "发送私信"
 
@@ -303,15 +315,15 @@ msgstr "最新"
 msgid "Login"
 msgstr "登录"
 
-#: app/templates/base.html:47
+#: app/templates/base.html:52
 msgid "Profile"
 msgstr "个人信息"
 
-#: app/templates/base.html:48
+#: app/templates/base.html:53
 msgid "Logout"
 msgstr "登出"
 
-#: app/templates/base.html:84
+#: app/templates/base.html:102
 msgid "Error: Could not contact server."
 msgstr "错误：无法连接到服务器。"
 
