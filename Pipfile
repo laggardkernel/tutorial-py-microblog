@@ -19,6 +19,7 @@ guess-language-spirit = "*"
 requests = "*"
 elasticsearch = "*"
 rq = "*"
+flask-httpauth = "*"
 
 [dev-packages]
 ipython = "*"
