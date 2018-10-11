@@ -23,6 +23,7 @@ rq = "*"
 [dev-packages]
 ipython = "*"
 flask-shell-ipython = "*"
+httpie = "*"
 
 [requires]
 python_version = "3.7"
