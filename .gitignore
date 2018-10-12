@@ -388,3 +388,5 @@ dmypy.json
 
 # rotating logs
 *.log.?
+
+.vscode/
