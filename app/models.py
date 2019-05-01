@@ -105,6 +105,9 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+
+    avatar_hash = db.Column(db.String(32))
+
     # referred with Model class in relationship
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
@@ -119,6 +122,8 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic'
     )
+
+    # followers, is defined in backref
 
     # messages
     # name the backref as author not sender, to reuse template _posts.html
@@ -151,9 +156,11 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # TODO: cache avatar digest in db
+    def gavatar_hash(self):
+        return md5(self.email.lower().encode("utf-8")).hexdigest()
+
     def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        digest = self.avatar_hash or self.gavatar_hash()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
 
     def is_following(self, user):
@@ -190,6 +197,11 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         except Exception as e:
             return
         return User.query.get(id)
+
+    @staticmethod
+    def on_changed_email(target, value, oldvalue, initiator):
+        """Update avatar_hash once email is changed"""
+        target.avatar_hash = md5(value.lower().encode('utf-8')).hexdigest
 
     def new_messages(self):
         last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
@@ -270,6 +282,9 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
             return None
         else:
             return user
+
+
+db.event.listen(User.email, "set", User.on_changed_email)
 
 
 @login.user_loader
