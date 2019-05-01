@@ -49,7 +49,7 @@ def create_user():
     if 'username' not in data or 'email' not in data or 'password' not in data:
         return bad_request('must include username, email and password fields')
     if User.query.filter_by(username=data['username']).first():
-        return bad_request('please use a different usernanme')
+        return bad_request('this username is taken, please use a different one')
     if User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
     user = User()
@@ -71,7 +71,7 @@ def update_user(id):
     data = request.get_json() or {}
     if 'username' in data and data['username'] != user.username and \
             User.query.filter_by(username=data['username']).first():
-        return bad_request('please use a different username')
+        return bad_request('this username is taken, please use a different one')
     if 'email' in data and data['email'] != user.email and \
             User.query.filter_by(email=data['email']).first():
         return bad_request('please use a different email address')
