@@ -18,7 +18,8 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
         g.search_form = SearchForm()
-    # store locale str in g fro moment.js
+    # store locale str in g from moment.js
+    # moment.js doesn't support `_Hans` format, just use other part
     g.locale = str(get_locale()).replace('_Hans', '')
 
 
@@ -28,6 +29,7 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
+        # TODO: use hook to set language attr automatically for Post
         language = guess_language(form.post.data)
         if language == 'UNKNOWN' or len(language) > 5:
             language = ''
@@ -195,6 +197,7 @@ def messages():
 @bp.route('/notifications')
 @login_required
 def notifications():
+    # TODO: remove read, or old notifications
     since = request.args.get('since', 0.0, type=float)
     notifications = current_user.notifications.filter(
         Notification.timestamp > since).order_by(Notification.timestamp.asc())

@@ -18,6 +18,7 @@ def send_mail(subject, sender, recipients, text_body, html_body, attachments=Non
     msg.html = html_body
     if attachments:
         for attachment in attachments:
+            # :attachment: tuple (name, mime, data)
             msg.attach(*attachment)
     if sync:
         mail.send(msg)

@@ -65,7 +65,6 @@ def create_user():
 @bp.route('/users/<int:id>', methods=['PUT'])
 @token_auth.login_required
 def update_user(id):
-    print(g.current_user)
     if g.current_user.id != id:
         abort(403)
     user = User.query.get_or_404(id)

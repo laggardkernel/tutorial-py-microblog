@@ -54,6 +54,7 @@ class SearchableMixin(object):
                 # use __tablename__ as inedex
                 add_to_index(obj.__tablename__, obj)
         for obj in session._changes['update']:
+            # update item with the same model.id
             if isinstance(obj, SearchableMixin):
                 add_to_index(obj.__tablename__, obj)
         for obj in session._changes['delete']:
@@ -131,6 +132,8 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 
     tasks = db.relationship('Task', backref='user', lazy='dynamic')
 
+    # token for API only, generated from random string. Storing tokens in db
+    # makes it possible to revoke the token manually, which is not easy in jwt.
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
@@ -148,6 +151,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    # TODO: cache avatar digest in db
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
@@ -193,7 +197,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
             Message.timestamp > last_read_time).count()
 
     def add_notification(self, name, data):
-        # delete same name notification before adding
+        # delete same name notification before adding, to avoid existence check
         self.notifications.filter_by(name=name).delete()
         n = Notification(name=name, payload_json=json.dumps(data), user=self)
         db.session.add(n)
@@ -214,6 +218,10 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 
     # methods for api. conversion between model object and json.
     def to_dict(self, include_email=False):
+        """
+        :param include_email: only return email when requested by oneself
+        :return: json data of user info
+        """
         data = {
             'id': self.id,
             'username': self.username,
@@ -240,6 +248,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
                 setattr(self, field, data[field])
         if new_user and 'password' in data:
             self.password = data['password']
+        # commit into db in a higher level call
 
     def get_token(self, expires_in=3600):
         now = datetime.utcnow()
@@ -322,6 +331,9 @@ class Notification(db.Model):
     timestamp = db.Column(db.Float, index=True, default=time)
     payload_json = db.Column(db.Text)
 
+    def __repr__(self):
+        return '<Notification: {}>'.format(self.payload_json)
+
     def get_data(self):
         return json.loads(str(self.payload_json))
 
@@ -333,6 +345,9 @@ class Task(db.Model):
     description = db.Column(db.String(128))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     complete = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return "<Task: {}>".format(self.name)
 
     def get_rq_job(self):
         try:

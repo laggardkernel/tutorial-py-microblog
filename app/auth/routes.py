@@ -49,6 +49,7 @@ def register():
         user.password = form.password.data
         db.session.add(user)
         db.session.commit()
+        # TODO: email validation
         flash(_("Congratulations, you're now a registered user!"))
         return redirect(url_for('.login'))
     # else: validation err or GET request
@@ -72,10 +73,12 @@ def reset_password_request():
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
+    # TODO: validate URL first
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     user = User.verify_reset_password_token(token)
     if not user:
+        # flash(_("Invalid token"))
         return redirect(url_for('main.index'))
     form = ResetPasswordForm()
     if form.validate_on_submit():

@@ -6,7 +6,7 @@ from app.models import User
 from .errors import error_response
 
 basic_auth = HTTPBasicAuth()
-token_auth = HTTPTokenAuth()
+token_auth = HTTPTokenAuth() # default scheme "Bearer"
 
 
 @basic_auth.verify_password
@@ -26,6 +26,11 @@ def basic_auth_error():
 
 @token_auth.verify_token
 def verify_token(token):
+    """
+    Auth with "Authorization:Bearer token"
+    :param token:
+    :return: boolean
+    """
     g.current_user = User.check_token(token) if token else None
     return g.current_user is not None
 

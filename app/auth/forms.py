@@ -38,6 +38,7 @@ class ResetPasswordRequestForm(FlaskForm):
 
 
 class ResetPasswordForm(FlaskForm):
+    # TODO: display user or email field (uneditable)
     password = PasswordField(_l('Password'), validators=[DataRequired()])
     password2 = PasswordField(_l('Repeat password'),
                               validators=[DataRequired(), EqualTo('password')])

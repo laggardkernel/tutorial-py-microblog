@@ -108,6 +108,7 @@
       var xhr = null;
       $('.user_popup').hover(
         function (event) {
+          // event triggered when mouse moves in
           // get the action bound element
           var elem = $(event.currentTarget);
           timer = setTimeout(function () {
@@ -116,6 +117,7 @@
               '/user/' + elem.first().text().trim() + '/popup').done(
               function (data) {
                 xhr = null;
+                // trigger popover from bootstrap
                 elem.popover({
                   trigger: 'manual',
                   html: true,
@@ -130,6 +132,7 @@
           }, 1000);
         },
         function (event) {
+          // event triggered when mouse moves out
           var elem = $(event.currentTarget);
           if (timer) {
             clearTimeout(timer);
@@ -137,7 +140,7 @@
           } else if (xhr) {
             xhr.abort();
             xhr = null;
-          } else {
+          } else { // ajax is done
             elem.popover('destroy');
           }
         }
